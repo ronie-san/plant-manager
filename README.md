@@ -26,3 +26,9 @@ declare module '*.png' {
 - Instalar dependências do React Navigation
   - ``expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view``
   - ``npm install @react-navigation/stack``
+- Instalar o [Iphone X Helper](github.com/ptelad/react-native-iphone-x-helper "Documentação Iphone X Helper"): ``npm i react-native-iphone-x-helper --save``
+- Cria pasta ``services`` e colocar o arquivo ``server.json``
+  - Instalar o Axios: ``npm install axios``
+  - Criar arquivo ``api.ts`` nesta pasta
+  - Instalar o [JSON Server](github.com/typicode/json-server "Documentação JSON Server"): ``npm install -g json-server``
+    - Para rodar: ``json-server ./src/services/server.json --host 192.168.0.158 --port 19000``
