@@ -31,4 +31,8 @@ declare module '*.png' {
   - Instalar o Axios: ``npm install axios``
   - Criar arquivo ``api.ts`` nesta pasta
   - Instalar o [JSON Server](github.com/typicode/json-server "Documentação JSON Server"): ``npm install -g json-server``
-    - Para rodar: ``json-server ./src/services/server.json --host 192.168.0.158 --port 19000``
+    - Para rodar: ``json-server ./src/services/server.json --host [IP] --port 3333 --delay 700``
+- Instalar o [SVG](docs.expo.io/versions/latest/sdk/svg/ "Documentação SVG"): ``expo install react-native-svg``
+- Baixar uma [animação Lottie](lottiefiles.com/featured)
+  - Buscar a animação apropriavel, baixar o json e colocar na pasta ``src/assets``
+  - Instalar o [Lottie](docs.expo.io/versions/latest/sdk/lottie "Documentação Lottie"): ``expo install lottie-react-native``
