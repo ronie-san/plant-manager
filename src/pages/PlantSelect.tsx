@@ -5,12 +5,13 @@ import {
     Text,
     StyleSheet,
     FlatList,
-    ActivityIndicator
+    ActivityIndicator,
 } from 'react-native';
 import { EnvironmentButton } from '../components/EnvironmentButton';
 import { Header } from '../components/Header';
 import { PlantCardPrimary } from '../components/PlantCardPrimary';
 import { Load } from '../components/Load';
+import { useNavigation } from '@react-navigation/core';
 import api from '../services/api';
 
 import colors from '../styles/colors';
@@ -43,7 +44,8 @@ export function PlantSelect() {
 
     const [page, setPage] = useState(1);
     const [loadingMore, setLoadingMore] = useState(false);
-    const [loadedAll, setLoadedAll] = useState(false);
+
+    const navigation = useNavigation();
 
     function handleEnvironmentSelected(environmentKey: string) {
         setEnvironmentSelected(environmentKey);
@@ -85,6 +87,10 @@ export function PlantSelect() {
         fetchPlant();
     }
 
+    function handlePlantSelect(plant: PlantProps) {
+        navigation.navigate('PlantSave', { plant });
+    }
+
     useEffect(() => {
         async function fetchEnvironment() {
             const { data } = await api.get('plants_environments?_sort=title&_order=asc');
@@ -119,6 +125,7 @@ export function PlantSelect() {
             <View>
                 <FlatList
                     data={environments}
+                    keyExtractor={(item) => String(item.key)}
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.environmentList}
@@ -132,8 +139,8 @@ export function PlantSelect() {
 
             <View style={styles.plants}>
                 <FlatList
-                    key="id"
                     data={filteredPlants}
+                    keyExtractor={(item) => String(item.id)}
                     showsVerticalScrollIndicator={false}
                     numColumns={2}
                     onEndReachedThreshold={0.1}
@@ -144,7 +151,9 @@ export function PlantSelect() {
                             <></>
                     }
                     renderItem={({ item }) => (
-                        <PlantCardPrimary data={item} />
+                        <PlantCardPrimary
+                            data={item}
+                            onPress={() => handlePlantSelect(item)} />
                     )} />
             </View>
         </View>

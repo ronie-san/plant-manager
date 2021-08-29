@@ -9,7 +9,7 @@
 - Para páginas, criar pasta ``pages`` na raiz
   - Os arquivos das páginas têm extensão ``.tsx``
 - Criar arquivo ``custom.d.ts`` na raiz e definir da seguinte forma:
-~~~typescript
+~~~ts
 declare module '*.png' {
     const content: any;
     export default content;
@@ -29,10 +29,23 @@ declare module '*.png' {
 - Instalar o [Iphone X Helper](github.com/ptelad/react-native-iphone-x-helper "Documentação Iphone X Helper"): ``npm i react-native-iphone-x-helper --save``
 - Cria pasta ``services`` e colocar o arquivo ``server.json``
   - Instalar o Axios: ``npm install axios``
-  - Criar arquivo ``api.ts`` nesta pasta
+  - Criar arquivo ``api.ts`` nesta pasta e desta forma:
+~~~ts
+import axios from 'axios';
+
+const api = axios.create({
+    baseURL: 'http://[IP DA MÁQUINA]:3333'
+});
+
+export default api;
+~~~
   - Instalar o [JSON Server](github.com/typicode/json-server "Documentação JSON Server"): ``npm install -g json-server``
-    - Para rodar: ``json-server ./src/services/server.json --host [IP] --port 3333 --delay 700``
+    - Para rodar: ``json-server ./src/services/server.json --host 192.168.0.77 --port 3333 --delay 800``
 - Instalar o [SVG](docs.expo.io/versions/latest/sdk/svg/ "Documentação SVG"): ``expo install react-native-svg``
 - Baixar uma [animação Lottie](lottiefiles.com/featured)
-  - Buscar a animação apropriavel, baixar o json e colocar na pasta ``src/assets``
+  - Buscar a animação apropriada, baixar o json e colocar na pasta ``src/assets``
   - Instalar o [Lottie](docs.expo.io/versions/latest/sdk/lottie "Documentação Lottie"): ``expo install lottie-react-native``
+- Instalar o [Async Storage](docs.expo.io/versions/latest/sdk/async-storage/ "Documentação Async Storage"): ``expo install @react-native-async-storage/async-storage``
+- Instalar o [DateTimePicker](docs.expo.io/versions/latest/sdk/date-time-picker/ "Documentação Date Time Picker"): ``expo install @react-native-community/datetimepicker``
+  - Obs: ele funciona de forma diferente para iOS e Android
+- Instalar o [Date FNS](date-fns.org/docs/Getting-Started/ "Documentação Date FNS"): ``npm install date-fns --save``
