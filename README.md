@@ -51,3 +51,4 @@ export default api;
 - Instalar o [Date FNS](date-fns.org/docs/Getting-Started/ "Documentação Date FNS"): ``npm install date-fns --save``
 - Instalar o [Tab navigation](reactnavigation.org/docs/tab-based-navigation/ "Documentação TabNnavigation"): ``npm install @react-navigation/bottom-tabs``
   - Caso não funcione acima, utilizar a versão 5.x: ``npm install @react-navigation/bottom-tabs@^5.x``
+- Instalar a [API de Notificações](https://docs.expo.dev/versions/latest/sdk/notifications/ "Docuemntação da API"): ``expo install expo-notifications``
