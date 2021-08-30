@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
-    SafeAreaView,
-    View,
     Text,
-    StyleSheet,
-    FlatList
+    StyleSheet
 } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import { SvgFromUri } from 'react-native-svg';

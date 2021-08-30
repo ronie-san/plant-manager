@@ -1,6 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, TouchableOpacityProps, Image, View } from 'react-native';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { StyleSheet, Text } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
 import colors from '../styles/colors';

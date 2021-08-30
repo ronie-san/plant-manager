@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Alert,
     StyleSheet,
     Text,
     View,
     Image,
-    ScrollView,
     Platform,
     TouchableOpacity,
 } from 'react-native';
-import { EnvironmentButton } from '../components/EnvironmentButton';
-import { Header } from '../components/Header';
-import { PlantCardPrimary } from '../components/PlantCardPrimary';
-import { Load } from '../components/Load';
 import { SvgFromUri } from 'react-native-svg';
 import { useRoute } from '@react-navigation/core';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
-import { RectButton } from 'react-native-gesture-handler';
-import api from '../services/api';
 import waterdrop from '../assets/waterdrop.png';
 
 import colors from '../styles/colors';
@@ -25,32 +18,24 @@ import fonts from '../styles/fonts';
 import { Button } from '../components/Button';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { isBefore } from 'date-fns';
+import { format } from 'date-fns/esm';
+import { PlantProps, savePlant } from '../libs/storage';
+import { useNavigation } from '@react-navigation/native';
 
 interface Params {
-    plant: {
-        id: string;
-        name: string;
-        about: string;
-        water_tips: string;
-        photo: string;
-        environments: [string];
-        frequency: {
-            times: number;
-            repeat_every: string;
-        }
-    }
+    plant: PlantProps
 }
 
 export function PlantSave() {
     const route = useRoute();
     const { plant } = route.params as Params;
     const [selectedDateTime, setSelectedDateTime] = useState(new Date());
-    const [showPicker, setShowPicker] = useState(Platform.OS === 'ios');
-    const [pickerVisible, setPickerVisible] = useState(false);
+    const [showDatePicker, setShowDatePicker] = useState(Platform.OS == 'ios');
+    const navigation = useNavigation();
 
     function handleChangeTime(event: Event, dateTime: Date | undefined) {
         if (Platform.OS === 'android') {
-            setShowPicker(false);
+            setShowDatePicker(oldState => !oldState);
         }
 
         if (dateTime && isBefore(dateTime, new Date())) {
@@ -63,8 +48,27 @@ export function PlantSave() {
         }
     }
 
-    function handleTimePress() {
-        setPickerVisible(true);
+    function handleOpenDateTimePickerForAndroid() {
+        setShowDatePicker(oldState => !oldState);
+    }
+
+    async function handleSave() {
+        try {
+            await savePlant({
+                ...plant,
+                dateTimeNotification: selectedDateTime
+            });
+
+            navigation.navigate('Confirmation', {
+                title: 'Tudo certo',
+                subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com muito cuidado.',
+                buttonTitle: 'Muito obrigado :D',
+                icon: 'hug',
+                nextScreen: 'MyPlants'
+            });
+        } catch {
+            Alert.alert('Não foi possível salvar. 😢');
+        }
     }
 
     return (
@@ -87,22 +91,24 @@ export function PlantSave() {
 
                 <Text style={styles.alertLabel}>Escolha o melhor horário para ser lembrado:</Text>
 
-                {
-                    pickerVisible &&
+                {showDatePicker &&
                     <DateTimePicker
                         value={selectedDateTime}
-                        display="spinner"
                         mode="time"
-                        onChange={handleChangeTime}
-                    />
+                        display="spinner"
+                        onChange={handleChangeTime} />}
+
+                {
+                    Platform.OS === 'android' && (
+                        <TouchableOpacity
+                            onPress={handleOpenDateTimePickerForAndroid}
+                            style={styles.dateTimePickerButton}>
+                            <Text style={styles.dateTimePickerText}>{`Mudar ${format(selectedDateTime, 'HH:mm')}`}</Text>
+                        </TouchableOpacity>
+                    )
                 }
-                <View style={styles.selectTime}>
-                    <RectButton                        
-                        onPress={handleTimePress}>
-                        <Text style={styles.selectedTime}>{selectedDateTime.toLocaleTimeString()}</Text>
-                    </RectButton>
-                </View>
-                <Button title="Cadastrar planta" onPress={() => { }} />
+
+                <Button title="Cadastrar planta" onPress={handleSave} />
             </View>
         </View>
     );
@@ -179,16 +185,15 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
 
-    selectTime: {
+    dateTimePickerButton: {
         width: '100%',
-        marginBottom: 5,
-        paddingHorizontal: 40
+        alignItems: 'center',
+        paddingVertical: 40
     },
 
-    selectedTime: {
-        textAlign: 'center',
-        fontFamily: fonts.heading,
+    dateTimePickerText: {
         color: colors.heading,
         fontSize: 24,
+        fontFamily: fonts.text,
     }
 });

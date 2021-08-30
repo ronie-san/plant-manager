@@ -40,7 +40,7 @@ const api = axios.create({
 export default api;
 ~~~
   - Instalar o [JSON Server](github.com/typicode/json-server "Documentação JSON Server"): ``npm install -g json-server``
-    - Para rodar: ``json-server ./src/services/server.json --host 192.168.0.77 --port 3333 --delay 800``
+    - Para rodar: ``json-server ./src/services/server.json --host 192.168.0.158 --port 3333 --delay 800``
 - Instalar o [SVG](docs.expo.io/versions/latest/sdk/svg/ "Documentação SVG"): ``expo install react-native-svg``
 - Baixar uma [animação Lottie](lottiefiles.com/featured)
   - Buscar a animação apropriada, baixar o json e colocar na pasta ``src/assets``
@@ -49,3 +49,5 @@ export default api;
 - Instalar o [DateTimePicker](docs.expo.io/versions/latest/sdk/date-time-picker/ "Documentação Date Time Picker"): ``expo install @react-native-community/datetimepicker``
   - Obs: ele funciona de forma diferente para iOS e Android
 - Instalar o [Date FNS](date-fns.org/docs/Getting-Started/ "Documentação Date FNS"): ``npm install date-fns --save``
+- Instalar o [Tab navigation](reactnavigation.org/docs/tab-based-navigation/ "Documentação TabNnavigation"): ``npm install @react-navigation/bottom-tabs``
+  - Caso não funcione acima, utilizar a versão 5.x: ``npm install @react-navigation/bottom-tabs@^5.x``

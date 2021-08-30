@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text, TouchableOpacityProps, Image, View } from 'react-native';
+import { StyleSheet, Text, Image, View } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import colors from '../styles/colors';
